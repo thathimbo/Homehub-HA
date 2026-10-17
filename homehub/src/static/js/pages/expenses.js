@@ -43,12 +43,13 @@ document.addEventListener('DOMContentLoaded', function(){
   const monthlyTotalAmount = document.getElementById('monthly-total-amount');
 
   // Settings bootstrap
-  let settings = (payload.settings||{currency:'₹', categories:[]});
-  function fmt(amount){ return (settings.currency||'₹') + (Number(amount)||0).toFixed(settings.fraction_precision ?? 2); }
-  // Calendar cells are narrow: whole units below 1,00,000 (short form above); fitCellAmounts() also shortens (₹3.3k) and then shrinks the text when a cell is too narrow
-  function fmtCell(amount){ const n = Number(amount)||0; return Math.abs(n) >= 99950 ? fmtCellShort(n) : (settings.currency||'₹') + Math.round(n); }
+  let settings = (payload.settings||{currency:'$', categories:[]});
+  // Thousands separators in US style: $1,234.50
+  function fmt(amount){ const p = settings.fraction_precision ?? 2; return (settings.currency||'$') + (Number(amount)||0).toLocaleString('en-US', {minimumFractionDigits: p, maximumFractionDigits: p}); }
+  // Calendar cells are narrow: whole units below 100,000 (short form above); fitCellAmounts() also shortens ($3.3k) and then shrinks the text when a cell is too narrow
+  function fmtCell(amount){ const n = Number(amount)||0; return Math.abs(n) >= 99950 ? fmtCellShort(n) : (settings.currency||'$') + Math.round(n); }
   function fmtCellShort(amount){
-    const cur = settings.currency||'₹';
+    const cur = settings.currency||'$';
     const n = Number(amount)||0, a = Math.abs(n);
     const short = (v, unit) => (Math.round(v*10)/10).toString() + unit;
     if (a < 1000) return cur + Math.round(n);

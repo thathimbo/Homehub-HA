@@ -130,6 +130,7 @@ def create_app(test_config: dict | None = None):
     from .blueprints import chores  # noqa: F401
     from .blueprints import qr  # noqa: F401
     from .blueprints import weather  # noqa: F401
+    from .blueprints import api_v1  # noqa: F401
     app.register_blueprint(main_bp)
 
     @app.errorhandler(413)
@@ -194,14 +195,29 @@ def create_app(test_config: dict | None = None):
         return url_for('static', filename=filename, v=version)
 
     # Timestamps are stored as naive UTC; show them in the server's local time (set with TZ)
+    def _date_format():
+        return (app.config.get('HOMEHUB_CONFIG') or {}).get('date_format') or '%m/%d/%Y'
+
     @app.template_filter('localtime')
-    def localtime_filter(value, fmt='%Y-%m-%d %H:%M'):
+    def localtime_filter(value, fmt=None):
         if not isinstance(value, datetime):
             return value
+        if fmt is None:
+            cfg = app.config.get('HOMEHUB_CONFIG') or {}
+            twelve_hour = str((cfg.get('reminders') or {}).get('time_format') or '12h') != '24h'
+            fmt = _date_format() + (' %I:%M %p' if twelve_hour else ' %H:%M')
         if value.tzinfo is None:
             value = value.replace(tzinfo=timezone.utc)
         from .i18n import format_local_datetime
         return format_local_datetime(value.astimezone(), fmt)
+
+    # Dates shown to people (not form values) use config.yml date_format
+    @app.template_filter('display_date')
+    def display_date_filter(value):
+        if not value or not hasattr(value, 'strftime'):
+            return value
+        from .i18n import format_local_datetime
+        return format_local_datetime(value, _date_format())
 
     # Add Jinja2 filter for JSON parsing
     @app.template_filter('from_json')

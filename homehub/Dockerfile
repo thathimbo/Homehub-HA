@@ -57,6 +57,8 @@ COPY --from=builder /install /usr/local
 
 # Copy application code
 COPY src /app
+# The Home Assistant integration the add-on installs into custom_components
+COPY integration/homehub /integration/homehub
 
 # Compile the translation catalogs (.po) into the .mo files the app reads
 RUN pybabel compile -d translations

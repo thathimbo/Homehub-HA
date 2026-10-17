@@ -32,7 +32,7 @@
                 <div class="meta mt-0.5">{{ _('By %(name)s at %(time)s', name=item.creator, time=item.timestamp|localtime) }}</div>
             </div>
             <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium {{ badge }}" title="{{ ngettext('%(num)s day left', '%(num)s days left', days_left) if days_left is not none else '' }}">
-                {{ item.expiry_date.strftime('%Y-%m-%d') }}
+                {{ item.expiry_date|display_date }}
                 {% if days_left is not none %}
                     <span class="opacity-80">· {{ _('Expired') if days_left < 0 else ngettext('%(num)s day left', '%(num)s days left', days_left) }}</span>
                 {% endif %}

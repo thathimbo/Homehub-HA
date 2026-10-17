@@ -1,0 +1,16 @@
+# Assist sentences for HomeHub (installed by the add-on into custom_sentences/en/homehub.yaml).
+# Shopping list and chores need none: Assist's built-in to-do sentences cover them.
+language: "en"
+intents:
+  HomeHubAddExpense:
+    data:
+      - sentences:
+          - "(add|log|record) [an|a new] expense [of] [$]{amount} [dollars|bucks] (for|on) {title}"
+          - "I (spent|paid) [$]{amount} [dollars|bucks] (for|on) {title}"
+lists:
+  amount:
+    range:
+      from: 1
+      to: 100000
+  title:
+    wildcard: true

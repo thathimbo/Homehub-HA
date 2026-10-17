@@ -153,7 +153,7 @@ window.REMINDERS_CAL_START = (function(){
 						<div class="font-medium truncate">{{ chore.description }}</div>
 						<div class="text-xs text-gray-500">
 							{{ chore.creator or _('Unknown') }}
-							{% if chore.due_date %} • {{ _('Due %(date)s', date=chore.due_date.strftime('%Y-%m-%d')) }}{% endif %}
+							{% if chore.due_date %} • {{ _('Due %(date)s', date=chore.due_date|display_date) }}{% endif %}
 						</div>
 					</div>
 					{% if chore.recurring_id %}<span class="text-[10px] px-2 py-0.5 rounded bg-indigo-100 text-indigo-700">{{ _('Recurring') }}</span>{% endif %}

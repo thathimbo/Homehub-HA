@@ -3,6 +3,8 @@ password: "" #leave blank for password less access
 admin_name: "Administrator" # protect it with: docker exec -it homehub flask set-admin-password
 max_upload_mb: 1024 # largest upload (Shared Cloud, PDFs) in MB; 0 removes the limit
 language: en # UI language for the whole household, a code from "Supported languages" in the README. Anything else falls back to English
+currency: "$" # shown before amounts; admins can also change it under Expenses > Settings
+date_format: "%m/%d/%Y" # how dates are shown, e.g. %Y-%m-%d or %d/%m/%Y
 feature_toggles:
   shopping_list: true
   media_downloader: true

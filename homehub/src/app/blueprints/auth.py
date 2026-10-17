@@ -49,8 +49,13 @@ def reload_config_and_auth():
         pass
     cfg = current_app.config.get('HOMEHUB_CONFIG', {})
     endpoint = request.endpoint or ''
-    # Home Assistant has already signed in whoever reaches HomeHub through its sidebar
-    if cfg.get('password_hash') and not homeassistant.is_ingress():
+    if request.path.startswith('/api/v1/'):
+        # The API answers with its own 401 instead of the login page (see api_v1.py)
+        return None
+    # Home Assistant has already signed in whoever reaches HomeHub through its sidebar,
+    # and automations sign in with the API key
+    from .api_v1 import has_valid_api_key
+    if cfg.get('password_hash') and not homeassistant.is_ingress() and not has_valid_api_key():
         if not session.get('authed') and not endpoint.startswith('static') and endpoint not in _OPEN_ENDPOINTS:
             return redirect(url_for('main.login'))
     else:

@@ -151,6 +151,9 @@ def _parse_config():
     config.setdefault('family_members', [])
     # UI language; anything without a translation falls back to English
     config.setdefault('language', 'en')
+    # US formats by default: $ amounts and month/day/year dates
+    config.setdefault('currency', '$')
+    config.setdefault('date_format', '%m/%d/%Y')
     _apply_theme_defaults(config.setdefault('theme', {}))
     # Weather widget defaults
     weather = config.setdefault('weather', {})

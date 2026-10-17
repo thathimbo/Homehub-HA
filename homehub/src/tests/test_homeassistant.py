@@ -146,3 +146,35 @@ def test_addon_options_become_config():
     assert cfg['reminders'] == {'time_format': '24h', 'calendar_start_day': 'monday',
                                 'categories': [{'key': 'pets', 'label': 'Pets', 'color': '#00ff00'}]}
     assert cfg['admin_name'] == 'Boss'
+
+
+def test_currency_and_dates_follow_home_assistant_and_options():
+    cfg = addon.build_config({'date_format': 'eu'}, {'currency': 'EUR'}, api_key='k')
+    assert (cfg['currency'], cfg['currency_code'], cfg['date_format'], cfg['api_key']) == ('€', 'EUR', '%d/%m/%Y', 'k')
+    cfg = addon.build_config({}, {})
+    assert (cfg['currency'], cfg['currency_code'], cfg['date_format']) == ('$', 'USD', '%m/%d/%Y')
+
+
+def test_api_key_is_made_once_and_kept(tmp_path):
+    first = addon._api_key({}, str(tmp_path))
+    assert len(first) > 30
+    assert addon._api_key({}, str(tmp_path)) == first
+    assert addon._api_key({'api_key': 'mine'}, str(tmp_path)) == 'mine'
+
+
+def test_integration_is_installed_into_home_assistant(tmp_path, monkeypatch):
+    import json
+    import os
+    source = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'integration', 'homehub'))
+    ha_config = tmp_path / 'homeassistant'
+    ha_config.mkdir()
+    monkeypatch.setattr(addon, 'INTEGRATION_SOURCE', source)
+    monkeypatch.setattr(addon, 'HA_CONFIG_DIR', str(ha_config))
+    assert addon.install_integration('key1', 'http://abc-homehub:5000') is True
+    target = ha_config / 'custom_components' / 'homehub'
+    assert (target / 'manifest.json').is_file()
+    assert json.loads((target / 'addon.json').read_text()) == {'url': 'http://abc-homehub:5000', 'api_key': 'key1'}
+    assert (ha_config / 'custom_sentences' / 'en' / 'homehub.yaml').is_file()
+    # Same version again: nothing to restart for, but the address and key are refreshed
+    assert addon.install_integration('key2', 'http://abc-homehub:5000') is False
+    assert json.loads((target / 'addon.json').read_text())['api_key'] == 'key2'

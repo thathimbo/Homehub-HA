@@ -107,14 +107,14 @@
                         {% if chore.done %}
                             · <span class="font-semibold">{{ _('Completed. That was its last date.') }}</span>
                         {% elif chore.id in ticked_ids %}
-                            · <span class="font-semibold text-green-600">{{ _('Done. Next due on %(date)s', date=chore.due_date.strftime('%Y-%m-%d')) }}</span>
+                            · <span class="font-semibold text-green-600">{{ _('Done. Next due on %(date)s', date=chore.due_date|display_date) }}</span>
                         {% elif chore.due_date %}
                             {% set is_overdue = today_date and chore.due_date < today_date %}
                             {% set is_today = today_date and chore.due_date == today_date %}
-                            · <span class="font-semibold {% if is_overdue %}text-red-600{% elif is_today %}text-amber-600{% else %}text-green-600{% endif %}">{{ _('Next due on %(date)s', date=chore.due_date.strftime('%Y-%m-%d')) }}</span>
+                            · <span class="font-semibold {% if is_overdue %}text-red-600{% elif is_today %}text-amber-600{% else %}text-green-600{% endif %}">{{ _('Next due on %(date)s', date=chore.due_date|display_date) }}</span>
                         {% endif %}
                     {% elif chore.due_date %}
-                        · {{ _('Due %(date)s', date=chore.due_date.strftime('%Y-%m-%d')) }}
+                        · {{ _('Due %(date)s', date=chore.due_date|display_date) }}
                     {% endif %}
                 </div>
                 <div class="md:hidden flex flex-wrap gap-1.5 mt-1.5 items-center item-tags empty:hidden" data-id="{{ chore.id }}"></div>

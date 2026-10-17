@@ -24,3 +24,4 @@ src/config.yml
 icon.png
 logo.png
 translations/
+integration/tests/

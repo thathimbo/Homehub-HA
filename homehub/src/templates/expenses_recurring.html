@@ -271,13 +271,13 @@
           
           <div>
             <label for="currency-input" class="text-sm text-gray-600 font-semibold">{{ _('Currency symbol') }}</label>
-            <input type="text" name="currency" id="currency-input" class="w-full border rounded p-2 mt-1" placeholder="₹">
+            <input type="text" name="currency" id="currency-input" class="w-full border rounded p-2 mt-1" placeholder="$">
           </div>
           
           <div>
             <label for="fraction-factor-input" class="text-sm text-gray-600 font-semibold">{{ _('Fraction factor') }}</label>
             <input type="number" min="1" step="1" name="fraction_factor" id="fraction-factor-input" class="w-full border rounded p-2 mt-1" value="{{ expense_settings.fraction_factor if expense_settings is defined and expense_settings.fraction_factor is defined else 100 }}" placeholder="100">
-            <p class="text-xs text-gray-500 mt-2">{{ _('How many lower currency units make one main unit, like ₹1 contains 100 paise. Common values: 1, 100, 1000.') }}</p>
+            <p class="text-xs text-gray-500 mt-2">{{ _('How many lower currency units make one main unit, like $1 contains 100 cents. Common values: 1, 100, 1000.') }}</p>
           </div>
           
           <div>

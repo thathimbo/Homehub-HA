@@ -1,5 +1,5 @@
 name: HomeHub
-version: "1.0.0"
+version: "1.1.0"
 slug: homehub
 description: Family dashboard (shopping, chores, calendar, expenses, notes and more) for the people in your home
 url: https://github.com/thathimbo/Homehub-HA
@@ -26,6 +26,9 @@ map:
     read_only: false
   - type: media
     read_only: false
+  # To install the HomeHub integration (Assist, to-do lists, calendar) into custom_components
+  - type: homeassistant_config
+    read_only: false
 watchdog: http://[HOST]:[PORT:5000]/healthz
 options:
   instance_name: ""
@@ -38,7 +41,10 @@ options:
   admin_password: ""
   direct_access_password: ""
   time_format: 12h
+  date_format: us
   calendar_start_day: sunday
+  install_ha_integration: true
+  api_key: ""
   weather: true
   weather_units: auto
   weather_view: compact
@@ -85,6 +91,9 @@ schema:
   admin_password: password?
   direct_access_password: password?
   time_format: list(12h|24h)
+  date_format: list(us|iso|eu)
+  install_ha_integration: bool
+  api_key: password?
   calendar_start_day: list(sunday|monday|tuesday|wednesday|thursday|friday|saturday)
   weather: bool
   weather_units: list(auto|metric|imperial)

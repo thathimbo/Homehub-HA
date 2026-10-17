@@ -197,7 +197,7 @@ def test_ticking_a_recurring_chore_again_takes_the_tick_back(client):
     client.post(f'/chores/toggle/{cid}')
     assert state(client) == (TODAY + timedelta(days=1), False)
     page = client.get('/chores').get_data(as_text=True)
-    assert 'Done. Next due on ' + (TODAY + timedelta(days=1)).isoformat() in page
+    assert 'Done. Next due on ' + (TODAY + timedelta(days=1)).strftime('%m/%d/%Y') in page
     assert 'class="check-btn is-checked"' in page
     flashes(client)
     # A second tap does not move it another day ahead
@@ -237,7 +237,7 @@ def test_last_date_of_a_recurring_chore_shows_as_completed(client):
     # Tapping it again opens it up
     client.post(f'/chores/toggle/{cid}')
     assert state(client) == (TODAY, False)
-    assert 'Next due on ' + TODAY.isoformat() in client.get('/chores').get_data(as_text=True)
+    assert 'Next due on ' + TODAY.strftime('%m/%d/%Y') in client.get('/chores').get_data(as_text=True)
 
 
 def test_ended_recurring_chore_cannot_be_reopened(client):

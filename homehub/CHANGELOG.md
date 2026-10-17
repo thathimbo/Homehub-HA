@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.1.0
+
+- US formats: amounts in dollars (or Home Assistant's currency) with 1,234.50 style
+  numbers, and month/day/year dates. *Date format* option for ISO or day/month/year.
+- New Home Assistant integration, installed by the add-on: shopping list and chores as
+  to-do lists, the calendar as a calendar entity, a "spending this month" sensor, and a
+  "HomeHub: Add expense" action.
+- Assist: "add milk to my shopping list", "add an expense of 20 dollars for groceries".
+- JSON API with an API key, for n8n and other tools.
+
 ## 1.0.0
 
 - First release as a Home Assistant add-on, based on HomeHub by surajverma.

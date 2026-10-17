@@ -35,7 +35,7 @@ def client():
 def test_expense_settings_defaults_include_fraction_factor(client):
     with client.application.app_context():
         settings = _load_expense_settings()
-    assert settings['currency'] == '₹'
+    assert settings['currency'] == '$'
     assert settings['categories'] == []
     assert settings['fraction_factor'] == 100
     assert settings['fraction_precision'] == 2

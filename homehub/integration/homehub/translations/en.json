@@ -1,0 +1,46 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect HomeHub",
+        "description": "If you run the HomeHub add-on, these are already filled in. Just select Submit.",
+        "data": {
+          "url": "HomeHub address",
+          "api_key": "API key"
+        },
+        "data_description": {
+          "url": "For the add-on this looks like http://xxxxxxxx-homehub:5000",
+          "api_key": "Shown in the HomeHub add-on log, or set on the add-on's Configuration tab"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Reconnect HomeHub",
+        "description": "HomeHub refused the API key. Check it and try again.",
+        "data": {
+          "url": "HomeHub address",
+          "api_key": "API key"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Could not reach HomeHub. Is the add-on running?",
+      "invalid_auth": "HomeHub refused the API key."
+    },
+    "abort": {
+      "already_configured": "HomeHub is already set up.",
+      "reauth_successful": "HomeHub is reconnected."
+    }
+  },
+  "services": {
+    "add_expense": {
+      "name": "Add expense",
+      "description": "Adds an expense to HomeHub's expense tracker.",
+      "fields": {
+        "title": {"name": "What for", "description": "What the money was spent on."},
+        "amount": {"name": "Amount", "description": "How much was spent."},
+        "person": {"name": "Paid by", "description": "Household member who paid. Defaults to whoever runs the action."},
+        "category": {"name": "Category", "description": "Optional expense category."}
+      }
+    }
+  }
+}

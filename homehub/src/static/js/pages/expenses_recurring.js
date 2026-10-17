@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function(){
   });
 
   // Load settings and populate UI
-  let settings = {currency: '₹', categories: [], fraction_factor: 100, fraction_precision: 2};
+  let settings = {currency: '$', categories: [], fraction_factor: 100, fraction_precision: 2};
   const serverSettings = JSON.parse(document.getElementById('expenseSettingsData').textContent);
   if (serverSettings && typeof serverSettings === 'object') {
     settings = { ...settings, ...serverSettings };
@@ -32,14 +32,14 @@ document.addEventListener('DOMContentLoaded', function(){
     const field = name => form.querySelector(`input[name="${name}"]`);
     const picker = window.ExpenseSplit.init(box, {
       getTotal: () => (parseFloat(field('unit_price').value) || 0) * (parseFloat(field('default_quantity').value) || 1),
-      fmt: n => (settings.currency || '₹') + (Number(n) || 0).toFixed(settings.fraction_precision ?? 2),
+      fmt: n => { const p = settings.fraction_precision ?? 2; return (settings.currency || '$') + (Number(n) || 0).toLocaleString('en-US', {minimumFractionDigits: p, maximumFractionDigits: p}); },
       precision: () => settings.fraction_precision ?? 2,
     });
     ['unit_price', 'default_quantity'].forEach(name => field(name).addEventListener('input', picker.refresh));
   });
 
   // Pre-fill settings form
-  document.getElementById('currency-input').value = settings.currency || '₹';
+  document.getElementById('currency-input').value = settings.currency || '$';
   const fractionFactorInput = document.getElementById('fraction-factor-input');
   if (fractionFactorInput) fractionFactorInput.value = settings.fraction_factor || 100;
   document.getElementById('categories-input').value = (settings.categories||[]).join(', ');

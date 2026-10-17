@@ -26,6 +26,15 @@ configuration:
     description: Only used if you give HomeHub a network port. The sidebar panel always uses your Home Assistant login.
   time_format:
     name: Time format
+  date_format:
+    name: Date format
+    description: us = 10/17/2026, iso = 2026-10-17, eu = 17/10/2026.
+  install_ha_integration:
+    name: Install the Home Assistant integration
+    description: Adds HomeHub's shopping list, chores, calendar and spending to Home Assistant, for Assist and automations.
+  api_key:
+    name: API key
+    description: For n8n and other tools. Blank makes one for you; it is printed in the add-on log at start.
   calendar_start_day:
     name: Week starts on
   weather:

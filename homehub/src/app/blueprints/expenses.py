@@ -309,7 +309,8 @@ def _missing_recurring_days(month_start: date, month_end: date, today: date) -> 
 
 
 def _load_expense_settings() -> dict:
-    settings = {'currency': '\u20b9', 'categories': [], 'fraction_factor': 100, 'fraction_precision': 2}
+    default_currency = (current_app.config.get('HOMEHUB_CONFIG') or {}).get('currency') or '$'
+    settings = {'currency': default_currency, 'categories': [], 'fraction_factor': 100, 'fraction_precision': 2}
     try:
         rows = db.session.execute(db.text("SELECT key, value FROM app_setting WHERE key IN ('currency','categories','fraction_factor')"))
         data = {k: v for k, v in rows}
