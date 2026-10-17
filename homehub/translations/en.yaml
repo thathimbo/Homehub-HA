@@ -1,0 +1,51 @@
+configuration:
+  instance_name:
+    name: Hub name
+    description: Shown at the top of HomeHub. Blank uses your Home Assistant location name.
+  language:
+    name: Language
+  use_home_assistant_people:
+    name: Use Home Assistant people
+    description: Every person in Settings > People becomes a household member.
+  who_is_home_from_home_assistant:
+    name: Who is Home from Home Assistant
+    description: Fill "Who is Home?" from each person's home/away/zone state instead of setting it by hand.
+  exclude_people:
+    name: Leave out these people
+    description: Person names or entity ids (e.g. person.guest) to keep out of the household.
+  extra_household_members:
+    name: Extra household members
+    description: Names to add that are not people in Home Assistant.
+  admin_name:
+    name: Admin name
+  admin_password:
+    name: Admin password
+    description: Asked for when someone switches to the admin user. Blank means no password.
+  direct_access_password:
+    name: Direct access password
+    description: Only used if you give HomeHub a network port. The sidebar panel always uses your Home Assistant login.
+  time_format:
+    name: Time format
+  calendar_start_day:
+    name: Week starts on
+  weather:
+    name: Weather widget
+    description: Uses your Home Assistant home location.
+  weather_units:
+    name: Weather units
+    description: auto follows Home Assistant's unit system.
+  weather_view:
+    name: Weather view
+  max_upload_mb:
+    name: Largest upload (MB)
+    description: 0 removes the limit.
+  primary_color:
+    name: Accent colour
+  features:
+    name: Features
+    description: Switch sections of HomeHub on or off.
+  reminder_categories:
+    name: Calendar categories
+    description: key, label and colour (#rrggbb) for each calendar category.
+network:
+  5000/tcp: Direct web access (not needed for the sidebar panel)

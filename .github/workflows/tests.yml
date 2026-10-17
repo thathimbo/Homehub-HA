@@ -5,8 +5,6 @@ on:
   push:
     branches:
       - main
-  # Lets the publish workflow run the same tests before it builds an image
-  workflow_call:
 
 jobs:
   pytest:
@@ -22,9 +20,12 @@ jobs:
         with:
           python-version: '3.14'
           cache: pip
+          cache-dependency-path: homehub/src/requirements*.txt
 
       - name: Install dependencies
+        working-directory: homehub/src
         run: pip install -r requirements-dev.txt
 
       - name: Run tests
+        working-directory: homehub/src
         run: python -m pytest

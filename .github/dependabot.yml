@@ -1,7 +1,7 @@
 version: 2
 updates:
   - package-ecosystem: pip
-    directory: /
+    directory: /homehub/src
     schedule:
       interval: weekly
     groups:
@@ -9,7 +9,7 @@ updates:
         patterns: ["*"]
 
   - package-ecosystem: npm
-    directory: /
+    directory: /homehub/src
     schedule:
       interval: weekly
     groups:
@@ -25,7 +25,7 @@ updates:
         patterns: ["*"]
 
   - package-ecosystem: docker
-    directory: /
+    directory: /homehub
     schedule:
       interval: weekly
     groups:
